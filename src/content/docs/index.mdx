@@ -1,0 +1,57 @@
+---
+title: Kanade
+description: 'One island that changes shape for what is happening: a desktop shell for niri, in Rust.'
+template: splash
+hero:
+  tagline: 'One island that changes shape for what is happening: a desktop shell for niri, in Rust.'
+  image:
+    file: ../../assets/kanade-mascot.png
+    alt: Kanade
+  actions:
+    - text: Install
+      link: /getting-started/installation/
+      icon: rocket
+    - text: GitHub
+      link: https://github.com/0x1d1e/kanade
+      icon: github
+      variant: minimal
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+<CardGrid>
+  <LinkCard
+    title="Getting started"
+    href="/getting-started/installation/"
+    description="Install, run it with niri, and wire up the layer rules and keybinds."
+  />
+  <LinkCard
+    title="Concepts"
+    href="/concepts/island/"
+    description="Island, Presentations, Surfaces and Modules: the vocabulary the rest of the docs use."
+  />
+  <LinkCard
+    title="Surfaces"
+    href="/surfaces/media/"
+    description="The thirteen things the Island expands into, from Media to Tray."
+  />
+  <LinkCard
+    title="Configuration"
+    href="/configuration/"
+    description="Where config lives, how layers merge, and every key by area."
+  />
+  <LinkCard
+    title="CLI"
+    href="/cli/"
+    description="Control every Surface, switch and session action from a script or a keybind."
+  />
+  <LinkCard
+    title="Integrations"
+    href="/integrations/dictation/"
+    description="Dictation, Google Calendar, agent hooks and the SDDM login screen."
+  />
+</CardGrid>
+
+Kanade is pre-1.0 and niri-only: expect breaking changes, and read [known gaps](/reference/known-gaps/) before relying on a feature.
+
+The design records live in the [repository](https://github.com/0x1d1e/kanade), indexed in [Decisions](/decisions/).
