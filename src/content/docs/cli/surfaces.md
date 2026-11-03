@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-Every Surface takes the same three forms: `open` opens it on the focused output, `close` collapses it when it is open there, and `toggle` does one or the other.
+User-opened Surfaces take three forms: `open` opens on the focused output, `close` collapses it there, and `toggle` does one or the other. Session uses `session menu`; Auth opens only for polkit requests and has no user-open verb.
 
 ```sh
 kanade launcher toggle
@@ -15,7 +15,9 @@ kanade island collapse
 
 | Verb | What it does |
 | --- | --- |
-| `launcher\|controls\|media\|notifications\|tray\|clipboard\|calendar\|weather\|wallpaper\|keys\|timer\|capture open\|close\|toggle` | Opens, collapses or toggles that Surface on the focused output |
+| `launcher\|controls\|media\|notifications\|tray\|clipboard\|calendar\|weather\|wallpaper\|keys\|timer\|capture\|window\|strip\|emoji\|screen-time\|files open\|close\|toggle` | Opens, collapses or toggles that Surface on the focused output; `screen-time` must first be enabled |
+| `minimap open\|close\|toggle` | Alias for Strip |
+| `session menu` | Opens Session's action choices |
 | `island collapse` | Collapses the open island on the focused output |
 | `gesture` | Opens the pointer overlay: draw one stroke, and the gesture it matches runs its verb |
 | `gesture record <name>` | Draws a name three times and stores the strokes |

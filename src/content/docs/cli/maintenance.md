@@ -10,7 +10,7 @@ The verbs that keep the install healthy and tell you what it is doing.
 | Verb | What it does |
 | --- | --- |
 | `completions bash\|fish\|zsh` | Prints shell completions, derived from the commands `kanade help` lists; works without a shell |
-| `update` | Replaces `~/.cargo/bin/kanade` with the published Arch x86_64 binary after checking `kanade.sha256` |
+| `update` | Builds `main` with Cargo into `~/.cargo/bin/kanade`, refreshes the user unit, and restarts it if active |
 | `doctor` | Read-only diagnostics; works without a shell, exits 1 on a failure |
 | `status` | The config generation, the last reload error and the keys pending restart |
 | `module list` | Each Module: whether it runs, why not, and what a restart would change |
@@ -30,7 +30,7 @@ kanade module enable idle
 `module enable` prints what the restart will change, the Modules that turn off with it included. `island` cannot be turned off.
 
 :::note
-`update` compiles nothing and installs no packages: a missing file, a short file, a checksum mismatch or any other download failure stops and leaves the installed binary as it was. Another architecture is refused. `sddm` never runs `sudo`; `status`, `enable`, `disable` and `theme use` print the root commands to run.
+`update` needs Rust and the build libraries. It installs no packages and writes no compositor config; a failed build leaves the installed binary as it was. A process started by Umbriel's autostart keeps running the old binary until restarted through that startup method. `sddm` never runs `sudo`; `status`, `enable`, `disable` and `theme use` print the root commands to run.
 :::
 
 ## See also

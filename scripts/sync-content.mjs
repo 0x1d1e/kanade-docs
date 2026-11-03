@@ -272,42 +272,108 @@ const written = [];
 
 // --- reference/known-gaps --------------------------------------------------
 
-/** Limitations.md bullets, grouped by area. Bullet text is copied verbatim. */
+/** Match explicit bullet prefixes so insertions and reordering cannot silently change areas. */
 const GAP_GROUPS = [
   {
     slug: 'shell',
     title: 'Shell, Island and Launcher',
-    description: 'Known gaps in the Island, the Dock, the Launcher, notifications and the shell\'s rendering.',
-    intro: 'Gaps in the Island, the Dock, the Launcher, notifications and the shell\'s rendering.',
-    bullets: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 31, 32, 33, 34, 37, 42, 43, 44, 45, 46, 47, 48, 49, 51, 52, 53],
+    description: 'Known gaps in the Island, the Dock, the Launcher, notifications, the Desk and rendering.',
+    intro: 'Gaps in the Island, the Dock, the Launcher, notifications, the Desk and rendering.',
+    prefixes: [
+      'niri and Umbriel are supported;',
+      'No screen reader support.',
+      'A fullscreen window covers the island,',
+      'Files dropped on a Dock icon',
+      'The Launcher closes as soon as an app is pressed,',
+      'A Launcher query nothing answers',
+      'A Launcher command (',
+      'The Launcher calculator converts',
+      'Emoji show only from',
+      'The charge limit needs',
+      'Without `pactl`,',
+      'Without `setpriv`',
+      'Notification sounds:',
+      'Inline reply (',
+      'The `blur` finish needs',
+      "A failed reload of niri's config",
+      'The `audio` visualizer',
+      'Synced lyrics (',
+      "The desktop's accessibility preferences",
+      'Moving an app to another output',
+      'Brightness of an external monitor',
+      "Apps' launcher entry progress",
+      'Input methods (',
+      '`appearance.scale` (',
+      '`kanade ui` names',
+      'The gesture launcher (',
+      'The buttons a program puts on a live Activity',
+      'The Desk (',
+      'A Desk face moves',
+      'The notes card (',
+      'A moving wallpaper (',
+    ],
   },
   {
     slug: 'capture',
     title: 'Capture and recording',
     description: 'Known gaps in screenshots, screen recording and the capture pipeline.',
     intro: 'Gaps in screenshots, screen recording and the capture pipeline.',
-    bullets: [13, 15, 16, 17, 18, 35, 36],
+    prefixes: [
+      'A screenshot niri saves',
+      'The annotation editor (',
+      'Screen recording records',
+      'Recording sound is',
+      'A recording is written',
+      'Locking the session while recording',
+      'Recording a window needs',
+      'Changing what a share shows',
+      'Stop sharing in Controls',
+    ],
   },
   {
     slug: 'lock-and-idle',
     title: 'Lock, idle and login',
-    description: 'Known gaps in the lock screen, idle handling and the SDDM login theme.',
-    intro: 'Gaps in the lock screen, idle handling and the SDDM login theme.',
-    bullets: [19, 20, 21, 22, 23, 24, 25, 26, 27],
+    description: 'Known gaps in the lock screen, idle handling, polkit authentication and the SDDM login theme.',
+    intro: 'Gaps in the lock screen, idle handling, polkit authentication and the SDDM login theme.',
+    prefixes: [
+      'The SDDM login screen theme',
+      'Locking before sleep waits',
+      'With no PAM service file',
+      'An unlock sent just before sleep',
+      'The lock screen does not type',
+      'A PAM service that asks',
+      'With `lock.grace` above',
+      "The session countdown's warning",
+      "Caffeine's duration",
+      'The `idle` Module honors',
+      "The lock screen's layout label",
+      "Polkit's prompt needs",
+    ],
   },
   {
     slug: 'clipboard-and-privacy',
     title: 'Clipboard and privacy',
     description: 'Known gaps in the clipboard history, the privacy cluster and notification privacy.',
     intro: 'Gaps in the clipboard history, the privacy cluster and what a notification shows.',
-    bullets: [28, 29, 30],
+    prefixes: [
+      'The clipboard history leaves out',
+      'Clipboard pins,',
+      "The privacy cluster's microphone",
+      "Banners show a notification's text on screencasts",
+    ],
   },
   {
     slug: 'calendar-and-settings',
     title: 'Calendar and settings',
-    description: 'Known gaps in the Calendar Surface, the Settings window and its niri page.',
-    intro: 'Gaps in the Calendar Surface, the Settings window and its niri page.',
-    bullets: [38, 39, 40, 41, 50],
+    description: 'Known gaps in the Calendar Surface, the Settings window and compositor configuration.',
+    intro: 'Gaps in the Calendar Surface, the Settings window and compositor configuration.',
+    prefixes: [
+      '`kanade niri-config` edits',
+      'The Outputs section of the niri page',
+      'The Settings window is',
+      "Settings' Health page",
+      'The Calendar Surface changes',
+    ],
   },
 ];
 
@@ -318,19 +384,29 @@ const GAP_GROUPS = [
     .filter((line) => line.startsWith('- '))
     .map((line) => rewriteLinks(line, source('docs/wiki/Limitations.md')));
 
-  const seen = new Set();
-  for (const group of GAP_GROUPS) {
-    for (const number of group.bullets) {
-      if (seen.has(number)) throw new Error(`Bullet ${number} is in two known-gaps groups`);
-      seen.add(number);
+  const grouped = new Map(GAP_GROUPS.map((group) => [group.slug, []]));
+  const matches = new Map();
+  for (const bullet of bullets) {
+    const owners = GAP_GROUPS.flatMap((group) =>
+      group.prefixes.filter((prefix) => bullet.startsWith(`- ${prefix}`))
+        .map((prefix) => ({ group, prefix }))
+    );
+    if (owners.length !== 1) {
+      throw new Error(`Expected one known-gaps group, found ${owners.length}: ${bullet}`);
     }
+    const { group, prefix } = owners[0];
+    if (matches.has(prefix)) throw new Error(`Known-gaps prefix matches two bullets: ${prefix}`);
+    matches.set(prefix, true);
+    grouped.get(group.slug).push(bullet);
   }
-  for (let number = 1; number <= bullets.length; number++) {
-    if (!seen.has(number)) throw new Error(`Bullet ${number} is in no known-gaps group`);
+  for (const group of GAP_GROUPS) {
+    for (const prefix of group.prefixes) {
+      if (!matches.has(prefix)) throw new Error(`Known-gaps prefix matches no bullet: ${prefix}`);
+    }
   }
 
   for (const group of GAP_GROUPS) {
-    const body = [group.intro, '', ...group.bullets.map((number) => bullets[number - 1])].join('\n');
+    const body = [group.intro, '', ...grouped.get(group.slug)].join('\n');
     written.push(
       await writePage(
         `reference/known-gaps/${group.slug}`,

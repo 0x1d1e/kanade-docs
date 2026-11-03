@@ -9,6 +9,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "sync": "node scripts/sync-content.mjs",
+    "check:sync": "node --test scripts/sync-content.test.mjs",
     "check:length": "node scripts/check-length.mjs"
   },
   "dependencies": {

@@ -24,7 +24,7 @@ opening clause of the record's own status line. Gaps in the sequence are gaps up
 | 0011 | [Kanade adapters where Amane lacks a capability](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0011-kanade-adapters-where-amane-lacks-a-capability.md) | accepted (design, roadmap 9 Shell essentials) |
 | 0012 | [Tray at Rest and item menus](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0012-tray-at-rest-and-item-menus.md) | accepted (roadmap 9 Shell essentials, #135) |
 | 0013 | [Screen recording with wf-recorder](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0013-screen-recording-with-wf-recorder.md) | accepted (roadmap 9 Shell essentials, #140) |
-| 0014 | [Running apps matched to desktop entries](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0014-running-apps-from-desktop-entries.md) | accepted (roadmap 10 Desktop/data, #143) |
+| 0014 | [Running apps matched to desktop entries](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0014-running-apps-from-desktop-entries.md) | accepted (roadmap 10 Desktop/data, #143 |
 | 0015 | [Local calendars as iCalendar files](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0015-local-calendars-as-icalendar.md) | accepted (roadmap 10 Desktop/data, #150) |
 | 0016 | [Google Calendar account sync](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0016-google-calendar-account-sync.md) | accepted (roadmap 10 Desktop/data, #151) |
 | 0017 | [Weather from Open-Meteo](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0017-weather-from-open-meteo.md) | accepted (roadmap 10 Desktop/data, #152) |
@@ -121,7 +121,7 @@ opening clause of the record's own status line. Gaps in the sequence are gaps up
 | 0119 | [Kanade edits niri's `config.kdl` on request](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0119-kanade-edits-nieris-config-on-request.md) | accepted |
 | 0120 | [SDDM loads a root-owned theme and separate user data](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0120-the-sddm-theme-is-an-overlay-the-user-owns.md) | accepted |
 | 0121 | [Remove the Liquid Glass finish](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0121-liquid-glass-finish-removed.md) | accepted |
-| 0122 | [The installer ships a binary](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0122-the-installer-ships-a-binary.md) | accepted |
+| 0122 | [The installer ships a binary](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0122-the-installer-ships-a-binary.md) | superseded for binary distribution |
 | 0123 | [The first start is a tour](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0123-the-first-start-is-a-tour.md) | accepted and implemented |
 | 0124 | [Notification silence](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0124-notification-silence.md) | accepted |
 | 0125 | [The installer wires the chosen Niri session; the first wallpaper is picked](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0125-first-session-start-and-wallpaper.md) | accepted |
@@ -131,3 +131,20 @@ opening clause of the record's own status line. Gaps in the sequence are gaps up
 | 0129 | [The Launcher's actions are a panel, and Ctrl+1..9 press the nth answer](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0129-launcher-action-panel.md) | accepted |
 | 0130 | [A query nothing answers is offered to the web](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0130-launcher-web-search-fallback.md) | accepted |
 | 0131 | [The Launcher opens in the Island, or in a window of its own](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0131-the-launcher-in-a-window-of-its-own.md) | accepted |
+| 0132 | [Column and window controls are a Surface of their own](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0132-column-and-window-controls-are-a-surface.md) | accepted |
+| 0133 | [The niri strip minimap is a Surface of its own](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0133-the-niri-strip-minimap-is-a-surface-of-its-own.md) | accepted |
+| 0134 | [The emoji grid is a Surface, sharing the Launcher's table](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0134-the-emoji-grid-is-a-surface-sharing-the-launchers-table.md) | accepted |
+| 0135 | [Prefix keys open their Surface](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0135-prefix-keys-open-their-surface.md) | accepted |
+| 0136 | [Weather place search and IP lookup, on request](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0136-weather-place-search-and-ip-lookup-on-request.md) | accepted |
+| 0137 | [The Desk: read-only faces of Services on the desktop](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0137-the-desk.md) | accepted |
+| 0138 | [Screen time](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0138-screen-time.md) | accepted |
+| 0139 | [Quicklinks are your own rows in the Launcher](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0139-quicklinks-are-your-own-rows.md) | accepted |
+| 0140 | [Desk notes: the one Desk face typed into in place](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0140-desk-notes-edit-in-place.md) | accepted |
+| 0141 | [Files is a shelf, not a manager](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0141-files-is-a-shelf-not-a-manager.md) | accepted |
+| 0142 | [Screenshots annotate in place, one slice of the editor](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0142-screenshot-annotation.md) | accepted |
+| 0143 | [Desk faces move by their handle, and stay where they are let go](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0143-desk-faces-move-by-their-handle.md) | accepted |
+| 0144 | [A moving wallpaper is drawn by the shell, over awww's still](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0144-moving-wallpaper.md) | accepted |
+| 0145 | [Usage rings on the Island](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0145-usage-rings-on-the-island.md) | accepted |
+| 0146 | [Polkit authentication on the Island](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0146-polkit-auth-on-the-island.md) | accepted |
+| 0147 | [Umbriel compositor support and config editor](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0147-umbriel-compositor-support-and-config-editor.md) | accepted |
+| 0148 | [The Desk's keyboard is the pointer's focus](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0148-desk-keyboard-is-the-pointer-focus.md) | accepted |

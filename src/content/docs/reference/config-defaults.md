@@ -53,8 +53,8 @@ sync = false
 accessibility = true
 # how the Island and Dock settle: "bouncy" like macOS, "smooth" with no overshoot, "snappy", or "playful"
 motion = "bouncy"
-# installed family for shell labels; unset uses Inter, then sans-serif. A family without a static SemiBold face renders regular weights, takes a restart
-# font = "Inter"
+# installed family for shell labels; unset uses Open Sauce One. A family without a static SemiBold face renders regular weights, takes a restart
+# font = "Open Sauce One"
 # the size of everything Kanade draws, on top of each output's own scale: 100% is unchanged, 125% a quarter larger. Windows already open keep their size; the lock screen is not scaled, % 80-200
 scale = 100
 
@@ -103,9 +103,10 @@ indicators = true
 entrance = "morph"
 
 [modules]
-# every Module is on unless set to false here; idle and dictation are off unless set to true, takes a restart
+# every Module is on unless set to false here; idle, dictation and screen-time are off unless set to true, takes a restart
 dictation = false
 idle = false
+screen-time = false
 
 [windows.apps]
 # app id = the .desktop file it belongs to, where Kanade's guess is wrong
@@ -183,6 +184,28 @@ sound_volume = 100
 # per app: the first rule whose app, desktop_entry, category and summary piece all match, ignoring case, sets banner, history, sound (false, a file or a sound name), volume (%), bypass_dnd, timeout (ms) and urgency; file only
 # rules = [{ app = "Slack", banner = false }, { bypass_dnd = true, summary = "battery" }]
 
+[desk]
+# the time and date in large plain text on the desktop, under every window, one per output; the clock itself takes no click, per output
+clock = false
+# the corner of the output the Desk stands in, per output
+clock_corner = "bottom-right"
+# previous, play or pause and next buttons for the player on the desktop, under every window, one set per output; only the buttons take the pointer; needs the media Module, per output
+media = false
+# the temperature and condition on the desktop, from the forecast already fetched; nothing while the weather Module is off or there is no forecast; takes no click, per output
+weather = false
+# the next event's time on the desktop, from the calendar; nothing while the calendar Module is off or there is no event; takes no click, per output
+agenda = false
+# the next event's title on the Desk agenda; off, the line is the time and the countdown; the title only when this is on, per output
+agenda_titles = false
+# the playing track's title and artist on the desktop; off, neither is shown, and the player is not read for them; needs the media Module, per output
+media_titles = false
+# your notes on the desktop, newest last, in $XDG_STATE_HOME/kanade/desk-notes; a click on the card types into it in place and Escape keeps it; off, the card is not drawn and the file is not read, per output
+notes = false
+
+[desk.place]
+# face = where it stands on the output, its top left corner in px from the output's top left: clock, weather, agenda, media or notes; a face given no place stands in the corner desk.clock_corner says, and dragging a face's handle sets this, per output
+# clock = { x = 40, y = 40 }
+
 [controls]
 # the switches the Controls Surface shows, in order, each "name" or "name:size" (wifi, bluetooth, caffeine, dnd, night-light, focus, charge-limit, power-profile; half, full or icon, where wifi and bluetooth have no icon); at most three rows, a tile this machine cannot use, like the charge limit without a battery that has one, is left out; the pencil in Controls edits them
 tiles = ["wifi", "bluetooth", "caffeine", "dnd", "night-light", "focus"]
@@ -194,6 +217,8 @@ tiles = ["wifi", "bluetooth", "caffeine", "dnd", "night-light", "focus"]
 per_monitor = true
 # how awww moves to a new wallpaper: "simple" fades at its own pace, "fade" fades, "wipe" sweeps across, "grow" opens a circle and "outer" closes one, from the tile chosen on the Wallpapers Surface, else the middle, and "random" lets awww pick one each time
 transition = "simple"
+# on, a moving image picked as the wallpaper is drawn by Kanade, at the speed it was made at, and pauses while the session is locked, niri's overview is open or a fullscreen window covers its monitor; off, awww shows such a file as its first picture
+moving = false
 # how long a transition other than "simple" takes, ms 1-60000
 transition_duration = 1000
 
@@ -204,6 +229,8 @@ actions = true
 commands = true
 # "island" opens the Launcher in the Island's own body; "detached" opens it in a window of its own, centred on the focused output
 style = "island"
+# your own rows in the Launcher, each a title and a target: a url opened in the default browser, or an argv list run directly with no shell, a leading `~/` in a word being your home directory; `passes_query = true` adds the typed query as one last word and hides the row until something is typed, and a row that fits nothing does not hide the web's rows; a layer replaces the list below; file only
+# quicklinks = [{ title = "GitHub", url = "https://github.com" }, { argv = ["kitty", "-e", "vim", "~/notes.md"], title = "Notes" }, { argv = ["lookup"], passes_query = true, title = "Look up" }]
 
 [calendar]
 # iCalendar (.ics) files and directories of them, read recursively, else $XDG_DATA_HOME/calendars
@@ -216,12 +243,16 @@ reminder = 0
 subscription_interval = 60
 
 [weather]
-# where the weather is for, as [latitude, longitude] in degrees, north and east positive; unset fetches nothing
+# where the weather is for, as [latitude, longitude] in degrees, north and east positive; unset fetches nothing. Settings finds it from a place name
 # location = [52.52, 13.41]
 # the location's name, which the Weather Surface shows
 # place = "Berlin"
 # °C and km/h, or °F and mph
 units = "metric"
+
+[capture]
+# a screenshot `capture screenshot` saved opens in an editor on the focused output, to draw rectangles and arrows and save a copy beside it; off, only the saved notice shows. The pointer draws; Escape closes without writing and Ctrl+Z takes back the last shape
+annotate = false
 
 [recording]
 # how much of the picture a screen recording keeps: "low", "medium", "high" or "max". Each is one fixed quantizer for the encoder in use, so a still screen costs nothing and a busy one what it needs; each step changes the size of a busy picture by about a quarter
@@ -230,6 +261,12 @@ quality = "high"
 encoder = "auto"
 # the DRM render node VA-API encodes on, like /dev/dri/renderD128; unset finds an Intel or AMD one, the GPU that drives the display first, and never an NVIDIA one
 # device = "/dev/dri/renderD128"
+
+[screen-time]
+# minutes of focused time before one notice that day, 0 for none, min 0-1440
+limit = 0
+# keep the focused window's title in the private screen-time file, off so only the app id is kept
+titles = false
 
 [gestures]
 # gesture name = the Kanade verb it runs, like "island collapse"; record a gesture with `kanade gesture record <name>`; never a program, which a hook or a verb of yours runs; file only
@@ -342,6 +379,14 @@ timeout = 10
 # rest.peek.battery = true
 # rest.peek.weather = true
 # rest.peek.agenda = true
+# desk.clock = false
+# desk.clock_corner = "bottom-right"
+# desk.media = false
+# desk.weather = false
+# desk.agenda = false
+# desk.agenda_titles = false
+# desk.media_titles = false
+# desk.notes = false
 ```
 
 For the layers these defaults sit under, and how to read or write one key, see

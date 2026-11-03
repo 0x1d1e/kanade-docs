@@ -1,7 +1,7 @@
 # Kanade documentation
 
 The documentation site for [Kanade](https://github.com/0x1d1e/kanade), a Rust desktop shell for
-the [niri](https://github.com/niri-wm/niri) Wayland compositor, built with
+the [niri](https://github.com/niri-wm/niri) and Umbriel Wayland compositors, built with
 [Astro](https://astro.build) and [Starlight](https://starlight.astro.build).
 
 ## Requirements
@@ -17,6 +17,7 @@ npm run build      # static build into dist/, with the links validator enabled
 npm run preview    # serve the built site
 npm run check      # astro check (types and content)
 npm run check:length # fail if a hand-written page is over 900 words
+npm run check:sync   # check limitation grouping and source-drift failures in an isolated fixture
 npm run sync       # regenerate the reference pages from the Kanade repository
 ```
 
@@ -32,13 +33,12 @@ SITE_URL=https://docs.example.com npm run build
 Set it when deploying so canonical URLs, Open Graph tags and the sitemap are absolute. Leaving it
 unset is fine for local builds; the sitemap then points at localhost.
 
-`lastUpdated: true` is enabled, but the page dates come from Git history of the checkout. This
-directory is not a Git repository, so no dates appear until it becomes one.
+`lastUpdated: true` is enabled; page dates come from the checkout's Git history.
 
 ## Content: written pages and generated pages
 
 Most of the site is written by hand and reads like a guide: short pages with a table of keys or
-verbs, one snippet, and a "See also" line. Nine pages are generated instead, because they are
+verbs, one snippet, and a "See also" line. Ten pages are generated instead, because they are
 reference material that has to stay word for word in step with the source.
 
 **Hand-written** (`src/content/docs/`, everything without a generated marker):
@@ -55,7 +55,8 @@ reference material that has to stay word for word in step with the source.
 - `reference/cli.md`: the verb table from `kanade/docs/wiki/CLI.md`.
 - `reference/domain-language.md`: `kanade/CONTEXT.md`.
 - `reference/known-gaps/`: `kanade/docs/wiki/Limitations.md`, split by area into five pages plus an
-  index table. Every bullet is kept.
+  index table. Every bullet is kept. Explicit bullet prefixes assign areas, so reordering stays safe;
+  an unknown, missing, ambiguous or duplicate prefix stops sync for review.
 - `decisions/index.md`: a table of `kanade/docs/adr/`, each title linking to the file on GitHub.
   Individual decision records are deliberately not ported.
 
@@ -71,7 +72,7 @@ It prunes pages carrying its own generated marker whose source disappeared, and 
 hand-written page, so a re-sync keeps the generated set matching upstream and is safe to repeat. Do
 not edit a generated page: change the source in the Kanade repository and re-run the script. The
 conversions it applies are limited to the first H1 (moved into `title`), links (site paths for
-pages that exist here, GitHub blob URLs for everything else, fragments dropped on site paths), and
+pages that exist here, GitHub blob URLs for everything else, with fragments preserved), and
 GitHub alert blockquotes (Starlight asides). Prose is otherwise copied verbatim, including the
 repository's own caveats about unverified behaviour.
 

@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-A Module is the switch that owns one feature. Turning one off starts no thread or helper process, posts nothing, and answers its verbs with `module <name> is off`. Every Module is on unless set to `false` under `[modules]`; `idle` and `dictation` are off unless set to `true`.
+A Module is the switch that owns one feature. Turning one off starts no thread or helper process, posts nothing, and answers its verbs with `module <name> is off`. Every Module is on unless set to `false` under `[modules]`; `idle`, `dictation` and `screen-time` are off unless set to `true`.
 
 ```toml
 [modules]
@@ -23,8 +23,9 @@ A Module whose requirement is off turns off too, and stderr names why. Turning o
 | Clipboard | `clipboard`, `clipboard-surface` |
 | Capture and wallpapers | `capture`, `capture-surface`, `wallpaper`, `wallpaper-surface` |
 | Calendar and weather | `calendar`, `calendar-surface`, `calendar-reminders`, `calendar-subscriptions`, `google-calendar`, `weather`, `weather-surface` |
-| Session and login | `lock`, `session`, `idle`, `sddm` |
-| Surfaces by hand | `controls`, `launcher`, `keys-surface`, `timer-surface` |
+| Session and login | `lock`, `session`, `idle`, `sddm`, `polkit` |
+| Surfaces by hand | `controls`, `launcher`, `keys-surface`, `timer-surface`, `window-surface`, `strip-surface`, `emoji-surface`, `files-surface`, `screen-time` |
+| Desktop faces | `desk` (each face is separately off by default; see [Desk](/concepts/desk/)) |
 | Automation and settings | `hooks`, `ui`, `settings`, `gesture`, `dictation` |
 
 `island` cannot be turned off. `lock` shows the Session Surface's Lock control only while it is on, and `session` is what `battery.critical_action` asks to suspend, hibernate or power off.

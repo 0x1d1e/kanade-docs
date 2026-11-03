@@ -10,8 +10,8 @@ Every known gap in Kanade, split by area. The bullets are copied verbatim from t
 
 | Area | Covers |
 | --- | --- |
-| [Shell, Island and Launcher](/reference/known-gaps/shell/) | the Island, the Dock, the Launcher, notifications and the shell's rendering. |
+| [Shell, Island and Launcher](/reference/known-gaps/shell/) | the Island, the Dock, the Launcher, notifications, the Desk and rendering. |
 | [Capture and recording](/reference/known-gaps/capture/) | screenshots, screen recording and the capture pipeline. |
-| [Lock, idle and login](/reference/known-gaps/lock-and-idle/) | the lock screen, idle handling and the SDDM login theme. |
+| [Lock, idle and login](/reference/known-gaps/lock-and-idle/) | the lock screen, idle handling, polkit authentication and the SDDM login theme. |
 | [Clipboard and privacy](/reference/known-gaps/clipboard-and-privacy/) | the clipboard history, the privacy cluster and notification privacy. |
-| [Calendar and settings](/reference/known-gaps/calendar-and-settings/) | the Calendar Surface, the Settings window and its niri page. |
+| [Calendar and settings](/reference/known-gaps/calendar-and-settings/) | the Calendar Surface, the Settings window and compositor configuration. |

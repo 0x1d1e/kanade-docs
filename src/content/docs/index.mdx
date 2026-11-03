@@ -1,9 +1,9 @@
 ---
 title: Kanade
-description: 'One island that changes shape for what is happening: a desktop shell for niri, in Rust.'
+description: 'One island that changes shape for what is happening: a desktop shell for niri and Umbriel, in Rust.'
 template: splash
 hero:
-  tagline: 'One island that changes shape for what is happening: a desktop shell for niri, in Rust.'
+  tagline: 'One island that changes shape for what is happening: a desktop shell for niri and Umbriel, in Rust.'
   image:
     file: ../../assets/kanade-mascot.png
     alt: Kanade
@@ -23,7 +23,7 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
   <LinkCard
     title="Getting started"
     href="/getting-started/installation/"
-    description="Install, run it with niri, and wire up the layer rules and keybinds."
+    description="Build and run with niri or Umbriel, then set up layer rules and keybinds."
   />
   <LinkCard
     title="Concepts"
@@ -33,7 +33,7 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
   <LinkCard
     title="Surfaces"
     href="/surfaces/media/"
-    description="The thirteen things the Island expands into, from Media to Tray."
+    description="Browse the Island's interactive Surfaces, from Media to Files and Auth."
   />
   <LinkCard
     title="Configuration"
@@ -52,6 +52,6 @@ import { CardGrid, LinkCard } from '@astrojs/starlight/components';
   />
 </CardGrid>
 
-Kanade is pre-1.0 and niri-only: expect breaking changes, and read [known gaps](/reference/known-gaps/) before relying on a feature.
+Kanade supports niri and Umbriel and is pre-1.0: expect breaking changes, and read [known gaps](/reference/known-gaps/) for compositor-specific limits before relying on a feature. Umbriel starts Kanade through its autostart list; that direct startup currently has no automatic crash restart.
 
 The design records live in the [repository](https://github.com/0x1d1e/kanade), indexed in [Decisions](/decisions/).

@@ -5,7 +5,9 @@ sidebar:
   order: 9
 ---
 
-The Capture Surface has tiles for a screenshot of an area, a window or the screen, and the screen recording with Stop while it runs. The audio choice below the tiles cycles none, system and mic.
+Capture offers screenshots and recording, with Pause/Resume and Stop while a recording runs. Recording audio cycles none, system, mic and mix; microphone choices are forgotten on restart.
+
+Under Umbriel, area screenshots need `slurp` and `grim`, output screenshots need `grim`, and copying needs `wl-copy`. A copy failure keeps the saved PNG. Window screenshots, color picking and niri's cast controls are unavailable. Screen and window recording require niri IPC; area recording under Umbriel is unverified.
 
 ```sh
 kanade capture screenshot area
@@ -16,11 +18,13 @@ kanade capture record stop
 
 | Verb | What it does |
 | --- | --- |
-| `capture screenshot area\|window\|output` | Asks niri for a screenshot, saved under `~/Pictures/Screenshots`; prints its path |
+| `capture screenshot area\|window\|output` | Saves under `~/Pictures/Screenshots` and prints the path; niri captures all three, Umbriel supports area and output |
 | `capture color` | Picks a pixel with niri's picker, copies it as `#rrggbb`, shows it on the Island and prints it |
-| `capture record start [screen\|area\|window] [none\|system\|mic]` | Records with `wf-recorder` to `~/Videos/Screencasts` |
+| `capture record start [screen\|area\|window] [none\|system\|mic\|mix]` | Records to `~/Videos/Screencasts`; window recording uses GStreamer and ffmpeg |
 | `capture record pause\|resume\|stop\|status` | Pause needs `ffmpeg`; `stop` joins the segments and prints the path |
 | `capture cast window\|monitor\|clear` | Changes what a screen share with a dynamic cast target shows |
+
+With `capture.annotate = true`, a screenshot saved by Kanade opens an editor: drag rectangles or arrows, Undo or Ctrl+Z removes the last shape, Save writes `<stem>-annotated.png`, and Escape closes without writing. Annotation is off by default; it has no text, crop or layer tools.
 
 Recording quality and encoder come from `[recording]`: `quality` is `low`, `medium`, `high` or `max`, and `encoder` is `vaapi`, `nvenc`, `software` or `auto`, which takes the first that works.
 

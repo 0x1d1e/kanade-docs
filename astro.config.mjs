@@ -10,7 +10,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Kanade',
-      description: 'One island that changes shape for what is happening: a desktop shell for niri, in Rust.',
+      description: 'One island that changes shape for what is happening: a desktop shell for niri and Umbriel, in Rust.',
       logo: { src: './src/assets/kanade-mark.png', alt: 'Kanade' },
       favicon: '/favicon.png',
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/0x1d1e/kanade' }],
@@ -32,6 +32,7 @@ export default defineConfig({
           label: 'Concepts',
           items: [
             { label: 'The Island', slug: 'concepts/island' },
+            { label: 'The Desk', slug: 'concepts/desk' },
             { label: 'Surfaces', slug: 'concepts/surfaces' },
             { label: 'Modules', slug: 'concepts/modules' },
           ],
@@ -52,6 +53,12 @@ export default defineConfig({
             { label: 'Keys', slug: 'surfaces/keys' },
             { label: 'Session', slug: 'surfaces/session' },
             { label: 'Tray', slug: 'surfaces/tray' },
+            { label: 'Window', slug: 'surfaces/window' },
+            { label: 'Strip', slug: 'surfaces/strip' },
+            { label: 'Emoji', slug: 'surfaces/emoji' },
+            { label: 'Screen time', slug: 'surfaces/screen-time' },
+            { label: 'Files', slug: 'surfaces/files' },
+            { label: 'Auth', slug: 'surfaces/auth' },
           ],
         },
         {
