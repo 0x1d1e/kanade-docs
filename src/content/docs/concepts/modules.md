@@ -30,6 +30,8 @@ A Module whose requirement is off turns off too, and stderr names why. Turning o
 
 `island` cannot be turned off. `lock` shows the Session Surface's Lock control only while it is on, and `session` is what `battery.critical_action` asks to suspend, hibernate or power off.
 
+Under Umbriel, an existing lock inherited from the surviving recovery parent is the exception to staying cold. Even with `lock` disabled, the replacement runs the connection and scenes needed to finish that lock; lock verbs and sleep handling stay off. After confirmed unlock or definite refusal/end and the parent's clear acknowledgement, the child restarts with the Module fully cold. See [recovery and its acceptance limits](/getting-started/running/#start-with-umbriel).
+
 :::caution
 Turning `privacy` off is warned about at every start: the privacy cluster is how you see the microphone, camera or screen cast in use.
 :::
