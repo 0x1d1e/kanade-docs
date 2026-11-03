@@ -40,7 +40,7 @@ test('sync keeps every limitation in its area across reordering and rejects sour
     assert.equal(Object.values(baseline).flat().length, bullets(original).length);
     for (const [group, prefix] of [
       ['capture', '- The annotation editor ('],
-      ['lock-and-idle', "- Polkit's prompt needs"],
+      ['lock-and-idle', "- Polkit's prompt is currently niri-only:"],
       ['clipboard-and-privacy', "- Banners show a notification's text on screencasts"],
       ['calendar-and-settings', '- The Calendar Surface changes'],
       ['shell', '- The Desk ('],

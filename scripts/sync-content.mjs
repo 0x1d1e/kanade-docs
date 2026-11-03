@@ -347,7 +347,7 @@ const GAP_GROUPS = [
       "Caffeine's duration",
       'The `idle` Module honors',
       "The lock screen's layout label",
-      "Polkit's prompt needs",
+      "Polkit's prompt is currently niri-only:",
     ],
   },
   {

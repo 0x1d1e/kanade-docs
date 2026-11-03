@@ -27,7 +27,7 @@ Expanding the Island opens one Surface: the full interactive content of an Activ
 | Emoji | A verb or the Launcher's `:` | [Emoji](/surfaces/emoji/) |
 | Screen time | A verb or Launcher destination, once enabled | [Screen time](/surfaces/screen-time/) |
 | Files | A verb or Launcher destination | [Files](/surfaces/files/) |
-| Auth | A request from polkit, never a user-open verb | [Auth](/surfaces/auth/) |
+| Auth | A request from polkit under niri; unavailable under Umbriel | [Auth](/surfaces/auth/) |
 
 Media, Notifications and Session are also Activity Kinds. Compact and Peek are the Activity's own small forms; Expanded is its Surface. Screen time's Activity is its limit notice, not the Surface. Most other Surfaces open only by user action; Auth opens only for polkit and holds the keyboard until answered, cancelled or locked.
 

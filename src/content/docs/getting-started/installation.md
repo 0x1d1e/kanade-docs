@@ -26,8 +26,8 @@ curl -fsSL https://raw.githubusercontent.com/0x1d1e/kanade/main/scripts/install 
 | Option | Effect |
 | --- | --- |
 | `--shell-only` | Omits desktop packages. A missing niri config is installed only with `--niri` or `--sddm`; those selections also include awww |
-| `--niri` | Installs niri without the rest of the desktop packages; with shell-only, also installs its config when missing |
-| `--no-niri` | Skips niri and writes no niri config; `--sddm` still installs niri |
+| `--niri` | Explicitly selects niri; leaves the default desktop package set enabled. Use `--shell-only --niri` to omit that set and install niri, awww and a missing niri config (unless `--no-niri` skips it) |
+| `--no-niri` | Skips automatic niri package selection and its config; explicit `--niri` or `--sddm` still installs niri, and `--sddm` also overrides the config skip |
 | `--sddm` | Installs SDDM, Qt dependencies and niri, sets up the theme overlay, and enables SDDM for the next boot without starting it |
 | `--sddm-greeter keep\|niri` | Chooses that login screen with `--sddm`; default is niri on hybrid NVIDIA, keep otherwise |
 | `--optional` | Adds optional packages and enables bluetooth, upower and power-profiles-daemon; NetworkManager is left for you to enable |
@@ -43,6 +43,8 @@ Install Umbriel separately. Use `--shell-only` for an existing desktop, or `--no
 
 Keep Kanade started by Umbriel: the supplied config has `[general] autostart = ["kanade"]`. Add `kanade` once to an existing autostart list and put `~/.cargo/bin` on Umbriel's PATH. The unit is tied to `niri.service` and does not start with Umbriel automatically. Direct autostart currently has no automatic crash restart. Use one startup method per session.
 
+Kanade's [Auth Surface](/surfaces/auth/) is currently niri-only. Under Umbriel, keep an external polkit agent such as polkit-gnome and disable Kanade's agent with `kanade module disable polkit`, then restart Kanade through Umbriel. Before first start, set `polkit = false` under `[modules]` in Kanade's `config.toml` instead. The installer does not install an external agent.
+
 ## Manual build
 
 From a source checkout:
@@ -56,7 +58,7 @@ Required: Rust, a C compiler, pkg-config, wayland, libxkbcommon, fontconfig, fre
 For niri, install and enable the unit as described in [Running Kanade](/getting-started/running/). For Umbriel, retain compositor autostart as above.
 
 :::caution
-Kanade must be the session's only notification daemon and polkit agent. Stop conflicting daemons such as mako, dunst or polkit-gnome and remove their startup entries before starting Kanade. Restart Kanade after resolving an ownership conflict.
+Kanade must be the session's only notification daemon: stop mako, dunst or other notification daemons and remove their startup entries, then restart Kanade. Under niri, using Kanade's polkit agent also requires stopping a competing agent; registration retries automatically, up to 30 s between attempts. Under Umbriel, retain the external polkit agent and disable Kanade's `polkit` Module as above.
 :::
 
 ## See also
