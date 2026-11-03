@@ -41,7 +41,9 @@ SDDM setup can disable another enabled display manager when SDDM is not already 
 
 Install Umbriel separately. Use `--shell-only` for an existing desktop, or `--no-niri` to keep desktop packages while skipping niri. Even shell-only copies `dist/umbriel/config.toml` when yours is missing, under `$XDG_CONFIG_HOME/umbriel/config.toml` (default `~/.config/umbriel/config.toml`). Existing configs stay intact.
 
-Keep Kanade started by Umbriel: the supplied config has `[general] autostart = ["kanade"]`. Add `kanade` once to an existing autostart list and put `~/.cargo/bin` on Umbriel's PATH. The unit is tied to `niri.service` and does not start with Umbriel automatically. Direct autostart currently has no automatic crash restart. Use one startup method per session.
+Keep Kanade started by Umbriel: the supplied config has `[general] autostart = ["kanade"]`. Add `kanade` once to an existing autostart list and put `~/.cargo/bin` on Umbriel's PATH. Bare `kanade` starts one recovery parent, which restarts its rendering child after an exit and retains acknowledged lock intent in memory. The unit stays tied to `niri.service`; no different unit is needed under Umbriel. Use one startup method per session.
+
+The parent itself is not restarted, a hung child is not detected, and an ambiguous unlock can conservatively relock. Live locked-crash recovery, replacement-lock authentication and logout/compositor shutdown acceptance are **NOT RUN**. Read [Running Kanade](/getting-started/running/) before relying on recovery.
 
 Kanade's [Auth Surface](/surfaces/auth/) is currently niri-only. Under Umbriel, keep an external polkit agent such as polkit-gnome and disable Kanade's agent with `kanade module disable polkit`, then restart Kanade through Umbriel. Before first start, set `polkit = false` under `[modules]` in Kanade's `config.toml` instead. The installer does not install an external agent.
 

@@ -148,3 +148,4 @@ opening clause of the record's own status line. Gaps in the sequence are gaps up
 | 0146 | [Polkit authentication on the Island](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0146-polkit-auth-on-the-island.md) | accepted |
 | 0147 | [Umbriel compositor support and config editor](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0147-umbriel-compositor-support-and-config-editor.md) | accepted |
 | 0148 | [The Desk's keyboard is the pointer's focus](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0148-desk-keyboard-is-the-pointer-focus.md) | accepted |
+| 0149 | [Umbriel starts a shell recovery parent](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0149-umbriel-starts-a-shell-recovery-parent.md) | accepted |

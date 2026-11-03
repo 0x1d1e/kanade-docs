@@ -16,7 +16,15 @@ Keep Kanade in Umbriel's `[general]` autostart list, as in the supplied `dist/um
 autostart = ["kanade"]
 ```
 
-Merge that entry with any existing commands, and ensure `~/.cargo/bin` is on the compositor's PATH. The supplied `kanade.service` is wanted by `niri.service`; it does not start automatically with Umbriel. Direct Umbriel autostart currently provides no automatic crash restart. If the shell exits, start `kanade` again from a terminal in the same session, after the previous process has ended. This recovery path has not been verified live here.
+Merge that entry with any existing commands, and ensure `~/.cargo/bin` is on the compositor's PATH. Bare `kanade` starts a non-rendering parent named `kanade-recover`, which owns one rendering child and restarts it after any exit. Duplicate starts are refused. The supplied `kanade.service` stays tied to `niri.service`; Umbriel needs no different unit.
+
+`kanade status` reports the parent's PID; `kanade doctor` checks that parent. `pgrep -x kanade` identifies the rendering child. To stop recovery intentionally while unlocked, send SIGTERM to the parent PID reported by status. Stopping only the child restarts it. Compositor exit stops both; the parent allows up to 6 s for child cleanup, then kills and reaps it. `scripts/dev` controls the parent too.
+
+Restart delay grows from 250 ms to at most 8 s, resetting after a 30 s run. Before a lock request reaches Umbriel, the parent acknowledges and retains lock intent in memory. A replacement relocks from that intent even without logind's `LockedHint`; Umbriel's source keeps a failed locker blank and locked until replacement. Intent clears only after a confirmed lock end. No password or disk lock-state marker is retained.
+
+The parent itself is not restarted: abrupt parent death kills its child and loses intent. A hung child is not detected. An ambiguous crash after unlocking but before confirmation can conservatively relock. Do not stop the parent while locked expecting a new one to restore the UI. If it dies while locked, use another TTY and a compatible replacement locker; ending the graphical session is a last resort that loses unsaved work.
+
+This is the implemented mechanism, supported by subprocess fixtures and compositor source evidence. Live Umbriel locked-crash recovery, replacement-lock authentication and logout/compositor shutdown acceptance are **NOT RUN**. See [ADR 0149](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0149-umbriel-starts-a-shell-recovery-parent.md).
 
 The supplied config includes Umbriel's `blur-kanade` layer rule. For an existing config, Settings' Compositor page or `kanade umbriel-config rules apply blur-kanade` adds it on request. The [niri rules](/getting-started/niri-rules/) use a different format and apply only to niri.
 
@@ -51,7 +59,7 @@ The restarted shell locks again. Only if recovery fails, `loginctl terminate-ses
 
 `kanade update` builds `main` with Cargo into `~/.cargo/bin/kanade`, refreshes the user unit and restarts it if active. It installs no packages and writes no compositor config. A failed build leaves the installed binary as it was.
 
-A Kanade started directly by Umbriel keeps running its old binary after the update. Restart that process to use the new build, retaining Umbriel autostart for future sessions and one shell per session. Running the installer again also builds from source and refreshes dependencies.
+The running Umbriel parent and child keep their loaded code after an update. While unlocked, stop the parent as above, wait for both processes to exit, then start the installed `kanade` from the same session to replace both. Keep Umbriel autostart for future sessions. Stopping only the child leaves the old parent running. Running the installer again also builds from source and refreshes dependencies.
 
 From a checkout, `cargo run` runs the shell and `scripts/dev` rebuilds and restarts it on saves. Stop the current shell before either.
 
