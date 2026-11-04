@@ -5,7 +5,13 @@ description: Answer polkit requests on the focused output under niri and Umbriel
 
 Auth opens on the selected compositor's focused output when polkit requests authentication for an action another program asks to perform, under niri and Umbriel. It has no Launcher destination, keybind or `open` verb. The `polkit` Module registers Kanade as the session's authentication agent.
 
-A never-shown request waits without taking input while confirmed focus is missing or overview is active, then retries when the Island changes. Remembered navigation focus cannot place Auth, and Umbriel's focused output must still be present. Subprocess regressions cover real compositor events reaching Auth, retries and cancellation, including actual password writes to a fake helper. Live acceptance of this revision remains **NOT RUN**.
+A never-shown request waits without taking input while confirmed focus is missing or overview is active, then retries when the Island changes. Remembered navigation focus cannot place Auth, and Umbriel's focused output must still be present. All 27 subprocess scenarios passed, covering real compositor events reaching Auth, retries, lock cleanup and input serialization, including actual password writes to a fake helper.
+
+Live Umbriel checks on implementation `cc0ea5c` observed successful registration, visible Auth on focused output `eDP-1` with exclusive keyboard ownership and an empty password field. Cancel and Escape each ended their request with `pkcheck` exit 1. During overview, a request stayed pending with Auth absent and no Island keyboard interactivity or focus; closing overview showed Auth, then Cancel ended the request with exit 1.
+
+A separate check on the same binary returned `pkcheck` exit 0 without an observed prompt or password entry. This establishes authorization only; password delivery and PAM success remain unverified, and the cause is undetermined. No policy or authorization cache was modified. Both runs restored the exact original shell with normal environment and unchanged real settings; focus was restored and the pointer untouched. [ADR 0147](https://github.com/0x1d1e/kanade/blob/main/docs/adr/0147-umbriel-compositor-support-and-config-editor.md#auth-extends-adr-0146) records the exact binary and local evidence references.
+
+Live password/PAM authentication, lock cancellation/password clearing, missing or stale focus, and niri acceptance remain **NOT RUN**. The subprocess checks above provide automated evidence separately.
 
 If you previously disabled the Module under Umbriel, run `kanade module enable polkit` and restart through Umbriel. To retain an external agent instead, keep Kanade's `polkit` Module off.
 
