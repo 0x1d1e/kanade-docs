@@ -43,7 +43,7 @@ Install Umbriel separately. Use `--shell-only` for an existing desktop, or `--no
 
 Keep Kanade started by Umbriel: the supplied config has `[general] autostart = ["kanade"]`. Add `kanade` once to an existing autostart list and put `~/.cargo/bin` on Umbriel's PATH. Bare `kanade` starts one recovery parent, which restarts its rendering child after an exit and retains acknowledged lock intent in memory. The unit stays tied to `niri.service`; no different unit is needed under Umbriel. Use one startup method per session.
 
-The parent itself is not restarted, a hung child is not detected, and an ambiguous unlock can conservatively relock. Live locked-crash recovery, replacement-lock authentication and logout/compositor shutdown acceptance are **NOT RUN**. Read [Running Kanade](/getting-started/running/) before relying on recovery.
+The parent itself is not restarted, a hung child is not detected, and an ambiguous unlock can conservatively relock. Live renderer-crash recovery and replacement-lock authentication were observed with the lock Module enabled and with a persisted disable, including suppression of replacement lock/unlock hooks in the disabled run. No-desktop-flash remains unobserved; live logout/compositor shutdown and niri acceptance remain **NOT RUN**. Read [Running Kanade](/getting-started/running/) for the tested candidate and evidence limits.
 
 Kanade's [Auth Surface](/surfaces/auth/) is currently niri-only. Under Umbriel, keep an external polkit agent such as polkit-gnome and disable Kanade's agent with `kanade module disable polkit`, then restart Kanade through Umbriel. Before first start, set `polkit = false` under `[modules]` in Kanade's `config.toml` instead. The installer does not install an external agent.
 
