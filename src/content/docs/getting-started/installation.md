@@ -45,7 +45,7 @@ Keep Kanade started by Umbriel: the supplied config has `[general] autostart = [
 
 The parent itself is not restarted, a hung child is not detected, and an ambiguous unlock can conservatively relock. Live renderer-crash recovery and replacement-lock authentication were observed with the lock Module enabled and with a persisted disable, including suppression of replacement lock/unlock hooks in the disabled run. No-desktop-flash remains unobserved; live logout/compositor shutdown and niri acceptance remain **NOT RUN**. Read [Running Kanade](/getting-started/running/) for the tested candidate and evidence limits.
 
-Kanade's [Auth Surface](/surfaces/auth/) is currently niri-only. Under Umbriel, keep an external polkit agent such as polkit-gnome and disable Kanade's agent with `kanade module disable polkit`, then restart Kanade through Umbriel. Before first start, set `polkit = false` under `[modules]` in Kanade's `config.toml` instead. The installer does not install an external agent.
+Kanade's [Auth Surface](/surfaces/auth/) supports Umbriel through the selected compositor's focused output. Live Umbriel registration and authentication remain **NOT RUN**. If you previously disabled the `polkit` Module, enable it with `kanade module enable polkit` and restart through Umbriel. To keep an external agent instead, leave the Module off. The installer does not install an external agent.
 
 ## Manual build
 
@@ -60,7 +60,7 @@ Required: Rust, a C compiler, pkg-config, wayland, libxkbcommon, fontconfig, fre
 For niri, install and enable the unit as described in [Running Kanade](/getting-started/running/). For Umbriel, retain compositor autostart as above.
 
 :::caution
-Kanade must be the session's only notification daemon: stop mako, dunst or other notification daemons and remove their startup entries, then restart Kanade. Under niri, using Kanade's polkit agent also requires stopping a competing agent; registration retries automatically, up to 30 s between attempts. Under Umbriel, retain the external polkit agent and disable Kanade's `polkit` Module as above.
+Kanade must be the session's only notification daemon: stop mako, dunst or other notification daemons and remove their startup entries, then restart Kanade. Using Kanade's polkit agent under either compositor also requires stopping a competing agent and removing its startup entry. Registration retries automatically, up to 30 s between attempts, and logs `kanade: polkit agent registered for this session` after success.
 :::
 
 ## See also
